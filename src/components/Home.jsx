@@ -3,13 +3,6 @@ import { Button, Card, CardBody, CardFooter, Col, Container, Row, UncontrolledCa
 import Base from "./Base";
 
 const Home=({title,description,buttonName,myFun})=>{
-    let styleOb={
-        padding:'20px',
-        background:'#e2e2e2',
-        border:'1px solid blue',
-        margin:'10px'
-
-    };
     return(
       <Base>
       <div>
