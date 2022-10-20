@@ -21,16 +21,16 @@ const Home=({title,description,buttonName,myFun})=>{
     {
     
       key: 1,
-      src: 'https://github.com/tanujkumarsaini/my_shop/blob/main/public/images/c4.jpg?raw=true',
+      src: 'https://github.com/tanujkumarsaini/tanujkumarsaini.github.io/blob/main/public/images/c4.jpg?raw=true',
       
     },
     {
       key: 2,
-      src: 'https://github.com/tanujkumarsaini/my_shop/blob/main/public/images/ip2.jpg?raw=true'
+      src: 'https://github.com/tanujkumarsaini/tanujkumarsaini.github.io/blob/main/public/images/ip2.jpg?raw=true'
     },
     {
       key: 3,
-      src: 'https://github.com/tanujkumarsaini/my_shop/blob/main/public/images/l1.jpg?raw=true'
+      src: 'https://github.com/tanujkumarsaini/tanujkumarsaini.github.io/blob/main/public/images/l1.jpg?raw=true'
     }
   ]}
  />
