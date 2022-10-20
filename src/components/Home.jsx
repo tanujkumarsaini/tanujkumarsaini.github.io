@@ -12,28 +12,9 @@ const Home=({title,description,buttonName,myFun})=>{
     };
     return(
       <Base>
-       <div>
-        <UncontrolledCarousel className="carousel-inner tales" 
-  items={[
-    {
-    
-      key: 1,
-      src: 'https://github.com/tanujkumarsaini/my_shop/blob/main/public/images/c4.jpg?raw=true',
-      
-    },
-    {
-      key: 2,
-      src: 'https://github.com/tanujkumarsaini/my_shop/blob/main/public/images/ip2.jpg?raw=true'
-    },
-    {
-      key: 3,
-      src: 'https://github.com/tanujkumarsaini/my_shop/blob/main/public/images/l1.jpg?raw=true'
-    }
-  ]}
- />
-
-        </div>
-      
+      <div>
+        <h1>This is homepage</h1>
+      </div>
 </Base>
 
     ) ;
