@@ -3,6 +3,7 @@ import { Button, Card, CardBody, CardTitle, Col, Container, Form, FormGroup, Inp
 import { createUser } from '../services/user-service'
 import {toast} from 'react-toastify'
 import Base from './Base'
+import { useNavigate } from 'react-router-dom'
 function Signup() {
 
  // const[name,setName]=useState('')
@@ -20,6 +21,8 @@ const [user,setUser]= useState({
     setUser({...user,[fieldName]:event.target.value})
    
   }
+
+  const navigate=useNavigate()
 
   const registerUser=(event=>{
     event.preventDefault()
@@ -62,6 +65,7 @@ const [user,setUser]= useState({
       console.log(data)
       //alert("User registered successfully!!")
       toast.success("User registered successfully")
+      navigate("/login")
     }).catch(error=>{
       if(error.response.status===400){
         //alert("validation error")
