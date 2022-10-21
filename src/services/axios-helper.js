@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getToken } from "../auth";
-export const BASE_URL="https://myshop-backend-apis.herokuapp.com/"
+export const BASE_URL="https://my-shop-ap.herokuapp.com"
+
 //export const BASE_URL="http://localhost:8082"
 
 export const axiosOb=axios.create({
