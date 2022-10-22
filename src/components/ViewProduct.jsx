@@ -59,7 +59,7 @@ const productHtml=()=>{
             </CardText>
 
             <div className='image-container text-center'>
-                <img style={{maxHeight:'200px'}} className='img-fluid' src={BASE_URL+'products/images/'+product.productId}/>
+                <img style={{maxHeight:'200px'}} className='img-fluid' src={BASE_URL+'/products/images/'+product.productId}/>
 
             </div>
 
