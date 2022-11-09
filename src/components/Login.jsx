@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import { Button, Card, CardBody, CardTitle, Col, Container, Form, Input, Label, Row } from 'reactstrap'
 import { login } from '../auth'
 import { generateToken } from '../services/user-service'
 import Base from './Base'
-
+import { userNameContext } from '../context'
 function Login() {
-
+    const value=useContext(userNameContext)
 const navigate=useNavigate()
 const [loginData,setLoginData]=useState({
     username:'',
@@ -37,6 +37,7 @@ const loginFormSubmit=(event)=>{
         console.log(data);
         toast.success("Login success")
         login(data,()=>{
+          value.names.name=data.user.userName;
             //redirect user to user dashboard
             navigate("/store/all")
             

@@ -70,7 +70,7 @@ const productHtml=()=>{
             <CardText dangerouslySetInnerHTML={{__html:product.productDesc}}>
              </CardText>
              <Container className='text-center'>
-                <Button onClick={()=>addItemToCart(product)} color='success' size='lg'>Add to cart</Button>
+                {product && product.stock?<Button onClick={()=>addItemToCart(product)} color='success' size='lg'>Add to cart</Button>:<h4 className='text-danger'>Product is out of stock</h4>}
                 <Button  tag={Link} to="/store/all" color='secondary'  className='ms-2' size='lg'>Go Back</Button>
 
              </Container>
@@ -86,7 +86,7 @@ const productHtml=()=>{
     <Row>
 
         <Col md={{size:10,offset:1}}>
-            {product && product.stock?productHtml():<h1 className='text-center textt-danger my-5'>Product is not in stock..</h1>}
+            {product && productHtml()}
             
 
         </Col>

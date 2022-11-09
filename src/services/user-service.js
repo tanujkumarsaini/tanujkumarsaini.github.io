@@ -24,3 +24,7 @@ export const searchUserByName=(userName)=>{
 export const updateUserDetails=(user)=>{
     return axiosPrivateOb.put(`/users/${user.userId}`,user)
 }
+
+export const getUserByEmail=(userEmail)=>{
+    return axiosOb.get(`/users/email/${userEmail}`)
+}

@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Button, Card, CardBody, CardTitle, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap'
 
 import { getCurrentUser, logout } from '../auth'
-import { updateUserDetails } from '../services/user-service'
+import { getUserByEmail, updateUserDetails } from '../services/user-service'
 import Base from './Base'
-
+import { login } from '../auth'
+import { userNameContext } from '../context'
 function Dashboard() {
   const [user,setUser]=useState(null)
   const navigate=useNavigate()
   useEffect(()=>{
-    setUser(getCurrentUser())
+   
+    getUserByEmail(getCurrentUser().userEmail).then(data1=>{
+      console.log(data1)
+      setUser(data1.data)
+    }).catch(error=>{
+    console.log(error)
+    
+    })
     console.log(user)
   },[])
 
@@ -20,7 +28,9 @@ function Dashboard() {
       navigate("/")
     })
   }
+  const value=useContext(userNameContext)
 
+  
 
   const onFieldChange=(event,fieldName)=>{
     setUser({...user,[fieldName]:event.target.value})
@@ -30,15 +40,18 @@ function Dashboard() {
   const updateUser=(event)=>{
     event.preventDefault()
    updateUserDetails(user).then(data=>{
+   value.names.name=data.data.userName;
    toast.success("User updated")
+
    }).catch(error=>{
     toast.error("error in updating")
    })
   }
 
+
   return (
    <Base>
-    <>
+    <div>
     {user &&(
       <div>
       <Container>
@@ -149,7 +162,7 @@ function Dashboard() {
         
       </div>
     )}
-    </>
+    </div>
    </Base>
   )
 }

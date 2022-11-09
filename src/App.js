@@ -17,7 +17,7 @@ import PrivateRoutes from './components/PrivateRoutes';
 import Store from './components/Store';
 import Test from './components/Test';
 import Cart from './components/Cart';
-import { CartProvider } from './context';
+import { CartProvider,UserNameProvider } from './context';
 import Orders from './components/Orders';
 import ViewProduct from './components/ViewProduct';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -33,6 +33,7 @@ const sayHello=()=>alert('hello, how are  you')
 
 function App() {
   return (
+    <UserNameProvider>
     <CartProvider>
     <BrowserRouter>
     <ToastContainer/>
@@ -73,6 +74,7 @@ function App() {
     </Routes>
     </BrowserRouter>
     </CartProvider>
+    </UserNameProvider>
     );
 }
 

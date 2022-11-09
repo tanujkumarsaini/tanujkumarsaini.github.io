@@ -9,6 +9,8 @@ import { useContext } from 'react'
 import { context1 } from '../context'
 import { getCurrentUser } from '../auth'
 import {createOrder as paymentOrder,successPayment} from '../services/payment_service'
+import {useNavigate} from "react-router-dom";
+
 function Orders() {
 
     let imageStyle={
@@ -18,6 +20,7 @@ function Orders() {
         margin:'15px 0 '
     }
     
+    const navigate=useNavigate()
 
 const [orders,setOrders]=useState(null)
 const [modal, setModal] = useState(false);
@@ -50,6 +53,113 @@ const openModal = (order) =>{
     const formData=(time)=>{
 return new Date(time).toDateString()
 }
+
+
+const initializeRazorpay=()=>{
+    return new Promise((res)=>{
+      const script=document.createElement("script")
+      script.src='https://checkout.razorpay.com/v1/checkout.js'
+      script.onload=()=>{
+        res(true)
+      }
+      script.onerror=()=>{
+        res(false)
+      }
+      document.body.appendChild(script)
+    })
+    }
+
+
+//initiate payment
+async function initiatePayment(data){
+    console.log(data)
+    const res=await initializeRazorpay();
+    if(res){
+      //
+      
+      paymentOrder(data.orderAmount).then(res =>{
+        console.log(res)
+       
+  
+        if (res.message === 'CREATED') {
+  
+  
+          //open payment form
+  
+  
+          var options = {
+              "key": "rzp_test_EGsQvPvh17P2vy", // Enter the Key ID generated from the Dashboard
+              "amount": res.price, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+              "currency": "INR",
+              "name": "TANUJ KUMAR SAINI",
+              "description": "This is learning payment module",
+              "image": "",
+              "order_id": res.orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+              "prefill": {
+                  "name": "",
+                  "email": "",
+                  "contact": "9999999999"
+              },
+              "notes": {
+                  "address": ""
+              },
+              "theme": {
+                  "color": "#3399cc"
+              }
+          };
+  
+  
+          options.handler = (response) => {
+  
+  
+              response['user_order_id'] = data.orderId
+              console.log(response)
+  
+              successPayment(response).then(r => {
+                  console.log(r)
+                  if (r.captured) {
+                      toast.success("Payment done .. your order proceeded")
+                     // navigate("/user/orders")
+                     getOrdersByUser(getCurrentUser()).then(data=>{
+                        console.log(data)
+                        setOrders({...data})
+                    }).catch(error=>{  
+                        console.log(error) 
+                        toast.error("Error in loading orders")
+                    })
+                     
+                      
+                  }
+  
+              }).catch(error => {
+                  console.log(error)
+                  toast.error("Error while capturing the payment :")
+              })
+  
+  
+          }
+  
+  
+          const rzp = new window.Razorpay(options);
+          rzp.open()
+  
+  
+      } 
+  
+      }).catch(error=>{
+        console.log(error)
+        toast.error("Error in creating order")
+      })
+  
+    }
+    else{
+      toast.error("Error in initializing razorpay")
+    }
+  }
+  
+
+
+
 
 
 const modalHtml=()=>{
@@ -147,7 +257,7 @@ return (
 
                 <Container className='text-center
                 '>
-                    {order.paymentStatus==='Not PAID' ? <Button size='sm' className='border-0' color='success'>Pay Now</Button>:''}
+                    {order.paymentStatus==='Not PAID' ? <Button size='sm' onClick={event=>initiatePayment(order)} className='border-0' color='success'>Pay Now</Button>:''}
                    <Button color='primary' size='sm' onClick={()=>openModal(order)} className='ms-2'>View Products</Button>
                 </Container>
 

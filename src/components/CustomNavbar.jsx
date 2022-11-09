@@ -16,7 +16,7 @@ import {
     NavbarText,
   } from 'reactstrap';
 import Base from './Base';
-import { context1 } from '../context';
+import { context1,userNameContext } from '../context';
   
 function CustomNavbar() {
     const [isOpen, setIsOpen] = useState(false)
@@ -35,7 +35,7 @@ function CustomNavbar() {
       window.open(url, '_blank', 'noopener,noreferrer');
     };
 
-const navbarHtml=(value)=>{
+const navbarHtml=(value,uname)=>{
   return ( <div>
 
     <Navbar
@@ -110,11 +110,15 @@ Cart(<b>{value.cart.items.length}</b>)
 
        
 
+         
+
+          
           <NavItem>
             <NavLink tag={ReactLink} to="/user/dashboard">
-            {getCurrentUser().userName}
+      {uname.names.name}
             </NavLink>
           </NavItem>
+
 
           <NavItem>
             <NavLink onClick={doLogout}>
@@ -152,14 +156,17 @@ Cart(<b>{value.cart.items.length}</b>)
 
 
   return (
+       <userNameContext.Consumer>
+        {uname=> (
        <context1.Consumer>
-        {
-          (value)=>(
-            navbarHtml(value)
+        {value =>(
+         
+         navbarHtml(value,uname)
           )
         }
        </context1.Consumer>
-   
+        )}
+       </userNameContext.Consumer>
       )
 }
 

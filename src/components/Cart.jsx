@@ -163,15 +163,29 @@ removeItemFromCart(item.product.productId).then(data=>{
 })
 }
 
+const setCartDetailsAfterOrdered=()=>{
+  getCart().then(data=>{
+value.setCart(data)
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
 const createOrder=()=>{
   let f=window.confirm("Are you sure want to proceed ?")
   if(f==false){
     console.log(f)
     return
   }
+
+
+
   //updating the cart id of order detail
   orderDetail.cartId=cart.cartId
   createOrderService(orderDetail).then((data)=>{
+    //setting quantity in navbar
+    setCartDetailsAfterOrdered()
   toast.success("Order Created : Redirecting to payment page...")
   setOrderCreated(true)
   initiatePayment(data);
@@ -198,6 +212,7 @@ const orderProceedHtml=()=>{
 
       <Container className='text-center'>
       <Button color='secondary' size='lg' onClick={()=>setOrderProceed(false)}>Back</Button>
+
         <Button onClick={createOrder} color='success' className='ms-3' size='lg'>Create Order & Proceed for payment</Button>
       </Container>
     </div>
@@ -254,6 +269,7 @@ const cartHtml=()=>{
     <Container>
       
       <h1>Cart Items({cart.items.length})</h1>
+      
       {orderProceed? orderCreated?<h1>Order created , Redirecting to payment page...</h1> :  orderProceedHtml():cartItemsHtml()}
       
      
@@ -262,7 +278,7 @@ const cartHtml=()=>{
 }
 
 
-  return (
+return (
     <Base>
     {cart ? cartHtml():(
     <Container>
